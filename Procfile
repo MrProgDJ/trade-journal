@@ -1,1 +1,2 @@
-web: gunicorn trade_journal.wsgi
+release: python manage.py migrate --noinput
+web: bash start.sh
