@@ -4,49 +4,47 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-6">
-        <div class="card card-dark">
+        <div class="card-glass animate-fade-in">
             <div class="card-body p-4 text-center">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(239,68,68,0.15); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-                    <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color: var(--accent-red);"></i>
+                <div class="danger-icon-ring">
+                    <i class="bi bi-exclamation-triangle"></i>
                 </div>
-                <h3 style="color: var(--text-primary);">حذف معامله</h3>
-                <p class="text-muted mb-4">
+                <h3 style="color: var(--text-primary); font-weight: 700;">حذف معامله</h3>
+                <p style="color: var(--text-secondary);" class="mb-4">
                     آیا از حذف این معامله اطمینان دارید؟<br>
-                    این عمل قابل بازگشت نیست.
+                    <span style="color: var(--accent-red); font-weight: 500;">این عمل قابل بازگشت نیست.</span>
                 </p>
 
-                <div class="card" style="background: var(--bg-secondary); border-color: var(--border-color);">
-                    <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-3">
-                                <small class="text-muted d-block">نماد</small>
-                                <span class="symbol-badge">{{ trade.symbol }}</span>
-                            </div>
-                            <div class="col-3">
-                                <small class="text-muted d-block">جهت</small>
-                                <span class="badge badge-{{ trade.side }}">{{ trade.get_side_display }}</span>
-                            </div>
-                            <div class="col-3">
-                                <small class="text-muted d-block">تاریخ</small>
-                                <span>{{ trade.date }}</span>
-                            </div>
-                            <div class="col-3">
-                                <small class="text-muted d-block">سود/زیان</small>
-                                <span class="fw-bold {% if trade.pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
-                                    {% if trade.pnl >= 0 %}+{% endif %}${{ trade.pnl|floatformat:2 }}
-                                </span>
-                            </div>
+                <div class="form-glass mb-4">
+                    <div class="row text-center g-3">
+                        <div class="col-3">
+                            <div class="stat-sub mb-1">نماد</div>
+                            <span class="symbol-badge">{{ trade.symbol }}</span>
+                        </div>
+                        <div class="col-3">
+                            <div class="stat-sub mb-1">جهت</div>
+                            <span class="badge badge-{{ trade.side }}">{{ trade.get_side_display }}</span>
+                        </div>
+                        <div class="col-3">
+                            <div class="stat-sub mb-1">تاریخ</div>
+                            <span style="font-size: 0.85rem;">{{ trade.date }}</span>
+                        </div>
+                        <div class="col-3">
+                            <div class="stat-sub mb-1">سود/زیان</div>
+                            <span style="font-weight: 700;" class="{% if trade.pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                                {% if trade.pnl >= 0 %}+{% endif %}${{ trade.pnl|floatformat:2 }}
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <form method="post" class="mt-4">
+                <form method="post">
                     {% csrf_token %}
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{% url 'trade_list' %}" class="btn btn-outline-light px-4">
+                        <a href="{% url 'trade_list' %}" class="btn btn-glass px-4">
                             <i class="bi bi-x-lg me-1"></i>انصراف
                         </a>
-                        <button type="submit" class="btn btn-danger-custom px-4">
+                        <button type="submit" class="btn btn-danger-glass px-4">
                             <i class="bi bi-trash me-1"></i>حذف معامله
                         </button>
                     </div>
