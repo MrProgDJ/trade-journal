@@ -15,8 +15,8 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 _hosts = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0')
 ALLOWED_HOSTS = [h.strip() for h in _hosts.split(',') if h.strip()]
-# Auto-allow Railway domains
-ALLOWED_HOSTS += ['*.up.railway.app', '*.railway.app']
+# Auto-allow Railway domains (.domain matches subdomains in Django)
+ALLOWED_HOSTS += ['.up.railway.app', '.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
