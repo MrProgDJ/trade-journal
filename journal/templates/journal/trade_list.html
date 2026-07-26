@@ -1,0 +1,129 @@
+{% extends "journal/base.html" %}
+{% block title %}لیست معاملات{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="page-title">
+        <i class="bi bi-list-ul me-2 text-primary"></i>لیست معاملات
+    </h1>
+    <a href="{% url 'trade_add' %}" class="btn btn-primary-custom">
+        <i class="bi bi-plus-lg me-1"></i>افزودن معامله
+    </a>
+</div>
+
+<!-- Filter Bar -->
+<div class="card card-dark mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">نماد</label>
+                {{ filter_form.symbol }}
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">جهت</label>
+                {{ filter_form.side }}
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">از تاریخ</label>
+                {{ filter_form.date_from }}
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">تا تاریخ</label>
+                {{ filter_form.date_to }}
+            </div>
+            <div class="col-md-1 d-grid">
+                <button type="submit" class="btn btn-primary-custom btn-sm">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card" style="background: var(--bg-card);">
+            <div class="stat-label">تعداد معاملات</div>
+            <div class="stat-value">{{ total_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="background: var(--bg-card);">
+            <div class="stat-label">نرخ برد</div>
+            <div class="stat-value">{{ win_rate }}%</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="background: var(--bg-card);">
+            <div class="stat-label">سود/زیان کل</div>
+            <div class="stat-value {% if total_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                {% if total_pnl >= 0 %}+{% endif %}${{ total_pnl|floatformat:2 }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trades Table -->
+<div class="table-dark-custom">
+    {% if trades %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>تاریخ</th>
+                <th>نماد</th>
+                <th>جهت</th>
+                <th>قیمت ورود</th>
+                <th>قیمت خروج</th>
+                <th>تعداد</th>
+                <th>سود/زیان</th>
+                <th>درصد</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trade in trades %}
+            <tr>
+                <td>{{ trade.date }}</td>
+                <td><span class="symbol-badge">{{ trade.symbol }}</span></td>
+                <td><span class="badge badge-{{ trade.side }}">{{ trade.get_side_display }}</span></td>
+                <td>{{ trade.entry_price }}</td>
+                <td>{{ trade.exit_price }}</td>
+                <td>{{ trade.quantity }}</td>
+                <td class="{% if trade.pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %} fw-bold">
+                    {% if trade.pnl >= 0 %}+{% endif %}${{ trade.pnl|floatformat:2 }}
+                </td>
+                <td class="{% if trade.pnl_percentage >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                    {% if trade.pnl_percentage >= 0 %}+{% endif %}{{ trade.pnl_percentage|floatformat:2 }}%
+                </td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a href="{% url 'trade_edit' trade.pk %}" class="btn btn-outline-light" title="ویرایش">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'trade_delete' trade.pk %}" class="btn btn-outline-light" title="حذف">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <p>
+            {% if filter_form.data %}
+                معامله‌ای با فیلترهای انتخابی یافت نشد
+            {% else %}
+                هنوز معامله‌ای ثبت نشده است
+            {% endif %}
+        </p>
+        <a href="{% url 'trade_add' %}" class="btn btn-primary-custom mt-2">
+            <i class="bi bi-plus-lg me-1"></i>افزودن معامله
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

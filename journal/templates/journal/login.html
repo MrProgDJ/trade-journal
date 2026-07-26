@@ -1,0 +1,43 @@
+{% extends "journal/base.html" %}
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <div style="width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <i class="bi bi-graph-up-arrow" style="font-size: 1.75rem; color: white;"></i>
+            </div>
+            <h2>ورود به دفتر معاملات</h2>
+            <p class="text-muted">حساب خود را وارد کنید</p>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-danger" style="background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: var(--accent-red);">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            نام کاربری یا رمز عبور اشتباه است
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">نام کاربری</label>
+                <input type="text" name="username" class="form-control" placeholder="نام کاربری" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">رمز عبور</label>
+                <input type="password" name="password" class="form-control" placeholder="رمز عبور" required>
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100 mb-3" style="padding: 0.75rem;">
+                <i class="bi bi-box-arrow-in-left me-2"></i>ورود
+            </button>
+        </form>
+
+        <div class="text-center">
+            <span class="text-muted">حساب ندارید؟</span>
+            <a href="{% url 'register' %}" class="login-link fw-bold">ثبت‌نام کنید</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

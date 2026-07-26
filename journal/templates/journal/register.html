@@ -1,0 +1,54 @@
+{% extends "journal/base.html" %}
+{% block title %}ثبت‌نام{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <div style="width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <i class="bi bi-person-plus" style="font-size: 1.75rem; color: white;"></i>
+            </div>
+            <h2>ثبت‌نام</h2>
+            <p class="text-muted">حساب جدید بسازید</p>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-danger" style="background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: var(--accent-red);">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            لطفاً خطاهای زیر را اصلاح کنید:
+            {% for field, errors in form.errors.items %}
+            <br>- {{ field }}: {{ errors.0 }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">نام کاربری</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ایمیل</label>
+                {{ form.email }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">رمز عبور</label>
+                {{ form.password1 }}
+            </div>
+            <div class="mb-4">
+                <label class="form-label">تکرار رمز عبور</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100 mb-3" style="padding: 0.75rem;">
+                <i class="bi bi-person-plus me-2"></i>ثبت‌نام
+            </button>
+        </form>
+
+        <div class="text-center">
+            <span class="text-muted">قبلاً ثبت‌نام کرده‌اید؟</span>
+            <a href="{% url 'login' %}" class="login-link fw-bold">ورود</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

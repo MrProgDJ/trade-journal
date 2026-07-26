@@ -1,0 +1,240 @@
+{% extends "journal/base.html" %}
+{% block title %}داشبورد{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="page-title">
+        <i class="bi bi-speedometer2 me-2 text-primary"></i>داشبورد
+    </h1>
+    <a href="{% url 'trade_add' %}" class="btn btn-primary-custom">
+        <i class="bi bi-plus-lg me-1"></i>افزودن معامله
+    </a>
+</div>
+
+<!-- Stats Row -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(59,130,246,0.08) 100%);">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">کل معاملات</div>
+                    <div class="stat-value">{{ total_trades }}</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(59,130,246,0.15); color: var(--accent-blue);">
+                    <i class="bi bi-bar-chart-line"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.08) 100%);">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">نرخ برد</div>
+                    <div class="stat-value">{{ win_rate }}%</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(16,185,129,0.15); color: var(--accent-green);">
+                    <i class="bi bi-trophy"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background: linear-gradient(135deg, var(--bg-card) 0%, {% if total_pnl >= 0 %}rgba(16,185,129,0.08){% else %}rgba(239,68,68,0.08){% endif %} 100%);">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">سود/زیان کل</div>
+                    <div class="stat-value {% if total_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                        {% if total_pnl >= 0 %}+{% endif %}${{ total_pnl|floatformat:2 }}
+                    </div>
+                </div>
+                <div class="stat-icon" style="background: {% if total_pnl >= 0 %}rgba(16,185,129,0.15){% else %}rgba(239,68,68,0.15){% endif %}; color: {% if total_pnl >= 0 %}var(--accent-green){% else %}var(--accent-red){% endif %};">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(245,158,11,0.08) 100%);">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">سود ماهانه</div>
+                    <div class="stat-value {% if monthly_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                        {% if monthly_pnl >= 0 %}+{% endif %}${{ monthly_pnl|floatformat:2 }}
+                    </div>
+                    <small class="text-muted">{{ monthly_trades_count }} معامله</small>
+                </div>
+                <div class="stat-icon" style="background: rgba(245,158,11,0.15); color: var(--accent-yellow);">
+                    <i class="bi bi-calendar-month"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart + Best/Worst -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <div class="card card-dark">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-graph-up me-2"></i>نمودار سود/زیان انباشته</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="pnlChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="card card-dark h-100">
+                    <div class="card-header"><i class="bi bi-trophy-fill me-2 text-success"></i>بهترین معامله</div>
+                    <div class="card-body">
+                        {% if best_trade %}
+                        <div class="mb-2">
+                            <span class="symbol-badge">{{ best_trade.symbol }}</span>
+                            <span class="badge badge-{{ best_trade.side }} ms-1">{{ best_trade.get_side_display }}</span>
+                        </div>
+                        <div class="pnl-positive fw-bold fs-5">+${{ best_trade.pnl|floatformat:2 }}</div>
+                        <small class="text-muted">{{ best_trade.date }}</small>
+                        {% else %}
+                        <p class="text-muted mb-0">هنوز معامله‌ای ثبت نشده</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card card-dark h-100">
+                    <div class="card-header"><i class="bi bi-exclamation-triangle-fill me-2 text-danger"></i>بدترین معامله</div>
+                    <div class="card-body">
+                        {% if worst_trade %}
+                        <div class="mb-2">
+                            <span class="symbol-badge">{{ worst_trade.symbol }}</span>
+                            <span class="badge badge-{{ worst_trade.side }} ms-1">{{ worst_trade.get_side_display }}</span>
+                        </div>
+                        <div class="pnl-negative fw-bold fs-5">${{ worst_trade.pnl|floatformat:2 }}</div>
+                        <small class="text-muted">{{ worst_trade.date }}</small>
+                        {% else %}
+                        <p class="text-muted mb-0">هنوز معامله‌ای ثبت نشده</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Trades -->
+<div class="card card-dark">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-clock-history me-2"></i>آخرین معاملات</span>
+        <a href="{% url 'trade_list' %}" class="btn btn-outline-light btn-sm">مشاهده همه</a>
+    </div>
+    <div class="card-body p-0">
+        {% if recent_trades %}
+        <div class="table-dark-custom">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>تاریخ</th>
+                        <th>نماد</th>
+                        <th>جهت</th>
+                        <th>قیمت ورود</th>
+                        <th>قیمت خروج</th>
+                        <th>تعداد</th>
+                        <th>سود/زیان</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trade in recent_trades %}
+                    <tr>
+                        <td>{{ trade.date }}</td>
+                        <td><span class="symbol-badge">{{ trade.symbol }}</span></td>
+                        <td><span class="badge badge-{{ trade.side }}">{{ trade.get_side_display }}</span></td>
+                        <td>{{ trade.entry_price }}</td>
+                        <td>{{ trade.exit_price }}</td>
+                        <td>{{ trade.quantity }}</td>
+                        <td class="{% if trade.pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %} fw-bold">
+                            {% if trade.pnl >= 0 %}+{% endif %}${{ trade.pnl|floatformat:2 }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>هنوز معامله‌ای ثبت نشده است</p>
+            <a href="{% url 'trade_add' %}" class="btn btn-primary-custom mt-2">
+                <i class="bi bi-plus-lg me-1"></i>اولین معامله را اضافه کنید
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+    fetch('{% url "trades_chart_data" %}')
+        .then(r => r.json())
+        .then(data => {
+            if (data.labels.length === 0) return;
+            const ctx = document.getElementById('pnlChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        {
+                            label: 'سود/زیان انباشته',
+                            data: data.cumulative,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#3b82f6',
+                        },
+                        {
+                            label: 'سود/زیان هر معامله',
+                            data: data.pnl,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            type: 'bar',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#94a3b8',
+                                font: { family: 'Vazirmatn' }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#64748b', font: { family: 'Vazirmatn', size: 10 } },
+                            grid: { color: 'rgba(45,55,72,0.5)' }
+                        },
+                        y: {
+                            ticks: { color: '#64748b', font: { family: 'Vazirmatn' }, callback: v => '$' + v },
+                            grid: { color: 'rgba(45,55,72,0.5)' }
+                        }
+                    }
+                }
+            });
+        });
+</script>
+{% endblock %}
