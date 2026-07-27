@@ -2,92 +2,62 @@
 {% block title %}ثبت‌نام{% endblock %}
 
 {% block content %}
+<!-- Animated Background Orbs -->
 <div class="auth-orbs">
-    <div class="auth-orb w-[420px] h-[420px] bg-blue-500/15 top-[-120px] right-[-120px]"</div>
-    <div class="auth-orb w-[320px] h-[320px] bg-violet-500/12 bottom-[-100px] left-[-80px]" style="animation-delay:-7s"</div>
-    <div class="auth-orb w-[260px] h-[260px] bg-emerald-500/10 top-[40%] left-[40%]" style="animation-delay:-14s"</div>
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-orb auth-orb-3"></div>
 </div>
 
-<div class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-[420px] backdrop-blur-2xl bg-slate-900/55 border border-slate-700/40 rounded-3xl p-10 relative shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_60px_rgba(59,130,246,0.05)]"
-         style="animation: fadeInUp .6s ease forwards">
-        <div class="absolute inset-0 rounded-3xl pointer-events-none"
-             style="padding:1px;background:linear-gradient(135deg,rgba(59,130,246,0.35),transparent 40%,transparent 60%,rgba(139,92,246,0.35));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude"</div>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <div style="width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);">
+                <i class="bi bi-person-plus" style="font-size: 1.75rem; color: white;"></i>
+            </div>
+            <h2 style="font-weight: 700;">ثبت‌نام</h2>
+            <p style="color: var(--text-muted);">حساب جدید بسازید</p>
+        </div>
 
-        <div class="text-center mb-6">
-            <div class="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-4 bg-gradient-to-br from-blue-500 to-violet-500 text-white shadow-[0_0_30px_rgba(59,130,246,0.35)]">
-                <i data-lucide="user-plus" class="w-8 h-8"</i>
-          </div>
-            <h2 class="text-2xl font-bold mb-1 aurora-text">ساخت حساب کاربری</h2>
-            <p class="text-ink-muted text-sm">شروع دفتر معاملات خود</p>
-      </div>
+        {% if form.errors %}
+        <div class="alert-glass alert-danger mb-3">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <div>
+                لطفاً خطاهای زیر را اصلاح کنید:
+                {% for field, errors in form.errors.items %}
+                <br>- {{ field }}: {{ errors.0 }}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
-        <form method="post" class="space-y-5">
+        <form method="post">
             {% csrf_token %}
-
-            {# username #}
-            <div class="relative">
+            <div class="mb-3">
+                <label class="form-label">نام کاربری</label>
                 {{ form.username }}
-                <label for="{{ form.username.id_for_label }}" class="floating-label text-sm">نام کاربری</label>
-                {% if form.username.errors %}
-                <p class="text-rose-400 text-xs mt-1.5">{{ form.username.errors.0 }}</p>
-                {% endif %}
-          </div>
-
-            {# email #}
-            <div class="relative">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ایمیل</label>
                 {{ form.email }}
-                <label for="{{ form.email.id_for_label }}" class="floating-label text-sm">ایمیل</label>
-                {% if form.email.errors %}
-                <p class="text-rose-400 text-xs mt-1.5">{{ form.email.errors.0 }}</p>
-                {% endif %}
-          </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">رمز عبور</label>
+                {{ form.password1 }}
+            </div>
+            <div class="mb-4">
+                <label class="form-label">تکرار رمز عبور</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="btn btn-primary-glass w-100 mb-3" style="padding: 0.75rem; font-size: 1rem;">
+                <i class="bi bi-person-plus me-2"></i>ثبت‌نام
+            </button>
+        </form>
 
-            {# password1 #}
-            <div class="relative" x-data="{ show1: false }">
-                <input :type="show1 ? 'text' : 'password'"
-                       name="{{ form.password1.name }}"
-                       id="{{ form.password1.id_for_label }}"
-                       class="floating-field pl-12"
-                       placeholder=" "
-                       required>
-                <label for="{{ form.password1.id_for_label }}" class="floating-label text-sm">رمز عبور</label>
-                <button type="button" @click="show1 = !show1"
-                        class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink-primary transition-colors">
-                    <i :data-lucide="show1 ? 'eye-off' : 'eye'" class="w-5 h-5"</i>
-              </button>
-                {% if form.password1.errors %}
-                <p class="text-rose-400 text-xs mt-1.5">{{ form.password1.errors.0 }}</p>
-                {% endif %}
-          </div>
-
-            {# password2 #}
-            <div class="relative" x-data="{ show2: false }">
-                <input :type="show2 ? 'text' : 'password'"
-                       name="{{ form.password2.name }}"
-                       id="{{ form.password2.id_for_label }}"
-                       class="floating-field pl-12"
-                       placeholder=" "
-                       required>
-                <label for="{{ form.password2.id_for_label }}" class="floating-label text-sm">تکرار رمز عبور</label>
-                <button type="button" @click="show2 = !show2"
-                        class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink-primary transition-colors">
-                    <i :data-lucide="show2 ? 'eye-off' : 'eye'" class="w-5 h-5"</i>
-              </button>
-                {% if form.password2.errors %}
-                <p class="text-rose-400 text-xs mt-1.5">{{ form.password2.errors.0 }}</p>
-                {% endif %}
-          </div>
-
-            <button type="submit" class="btn-primary w-full py-3 text-base">
-                <i data-lucide="user-plus" class="w-5 h-5"</i><span>ثبت‌نام</span>
-          </button>
-      </form>
-
-        <div class="text-center mt-6 text-sm">
-            <span class="text-ink-muted">حساب دارید؟</span>
-            <a href="{% url 'login' %}" class="text-blue-400 hover:text-blue-300 hover:underline font-bold transition-colors">ورود کنید</a>
-      </div>
-  </div>
+        <div class="text-center">
+            <span style="color: var(--text-muted);">قبلاً ثبت‌نام کرده‌اید؟</span>
+            <a href="{% url 'login' %}" class="login-link fw-bold">ورود</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

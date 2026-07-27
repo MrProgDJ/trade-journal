@@ -2,113 +2,154 @@
 {% block title %}لیست معاملات{% endblock %}
 
 {% block content %}
-<div class="reveal">
-    {# Page header #}
-    <div class="flex items-center justify-between mb-6">
-        <div>
-            <h1 class="text-2xl font-bold">معاملات</h1>
-            <p class="text-ink-muted text-sm mt-1">لیست تمام معاملات شما</p>
-       </div>
-        <a href="{% url 'trade_add' %}" class="btn-primary">
-            <i data-lucide="plus" class="w-4 h-4"</i>
-            <span>معامله جدید</span>
-       </a>
-   </div>
+<div class="page-header">
+    <h1 class="page-title">
+        <i class="bi bi-list-ul page-title-icon"></i>
+        لیست معاملات
+    </h1>
+    <a href="{% url 'trade_add' %}" class="btn btn-primary-glass">
+        <i class="bi bi-plus-lg me-1"></i>افزودن معامله
+    </a>
+</div>
 
-    {# Filters #}
-    <div class="glass-card p-5 mb-5">
-        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="relative">
-                <input type="text" name="symbol" value="{{ filter_symbol|default:'' }}"
-                       class="floating-field" placeholder=" " id="filter_symbol">
-                <label for="filter_symbol" class="floating-label text-sm">نماد</label>
-           </div>
-            <div>
-                <select name="side" class="floating-field-select">
-                    <option value="">همه</option>
-                    <option value="buy" {% if filter_side == 'buy' %}selected{% endif %}>خرید</option>
-                    <option value="sell" {% if filter_side == 'sell' %}selected{% endif %}>فروش</option>
-               </select>
-           </div>
-            <div>
-                <select name="result" class="floating-field-select">
-                    <option value="">همه</option>
-                    <option value="win" {% if filter_result == 'win' %}selected{% endif %}>سود</option>
-                    <option value="loss" {% if filter_result == 'loss' %}selected{% endif %}>ضرر</option>
-               </select>
-           </div>
-            <div class="flex gap-2">
-                <button type="submit" class="btn-primary flex-1">
-                    <i data-lucide="filter" class="w-4 h-4"</i>
-                    <span>فیلتر</span>
-               </button>
-                <a href="{% url 'trade_list' %}" class="btn-glass">
-                    <i data-lucide="x" class="w-4 h-4"</i>
-               </a>
-           </div>
-       </form>
-   </div>
+<!-- Filter Bar -->
+<div class="form-glass mb-4 animate-fade-in">
+    <form method="get" class="row g-3 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label">نماد</label>
+            {{ filter_form.symbol }}
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">جهت</label>
+            {{ filter_form.side }}
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">از تاریخ</label>
+            {{ filter_form.date_from }}
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">تا تاریخ</label>
+            {{ filter_form.date_to }}
+        </div>
+        <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-primary-glass btn-sm">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
-    {# Trades table #}
-    <div class="glass-card overflow-hidden">
-        {% if trades %}
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="text-ink-muted text-xs">
-                        <th class="px-5 py-4 text-right font-medium">نماد</th>
-                        <th class="px-5 py-4 text-right font-medium">نوع</th>
-                        <th class="px-5 py-4 text-right font-medium">ورود</th>
-                        <th class="px-5 py-4 text-right font-medium">خروج</th>
-                        <th class="px-5 py-4 text-right font-medium">تعداد</th>
-                        <th class="px-5 py-4 text-right font-medium">سود/ضرر</th>
-                        <th class="px-5 py-4 text-right font-medium">تاریخ</th>
-                        <th class="px-5 py-4 text-right font-medium>"</th>
-                   </tr>
-               </thead>
-<tbody>
-                    {% for trade in trades %}
-<tr class="border-t border-line hover:bg-white/[0.02] transition-colors">
-                        <td class="px-5 py-4"><span class="pill-symbol">{{ trade.symbol</span></td>
-                        <td class="px-5 py-4">
-                            {% if trade.side == 'buy' %}
-                                <span class="pill-buy">خرید</span>
-                            {% else %}
-                                <span class="pill-sell">فروش</span>
-                            {% endif %}
-                       </td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.entry_price</td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.exit_price|default:"-"</td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.quantity</td>
-                        <td class="px-5 py-4 font-bold {% if trade.pnl > 0 %}pnl-pos{% elif trade.pnl ">< 0 %}pnl-neg{% else %}text-ink-secondary{% endif %}">
-                            {% if trade.pnl %}{{ trade.pnl|floatformat:2 }}{% else %}-{% endif %}
-                       </td>
-                        <td class="px-5 py-4 text-ink-muted text-sm">{{ trade.date|date:"Y/m/d"</td>
-                        <td class="px-5 py-4">
-                            <div class="flex gap-2">
-                                <a href="{% url 'trade_edit' trade.pk %}" class="btn-action">
-                                    <i data-lucide="edit-2" class="w-4 h-4"</i>
-                               </a>
-                                <a href="{% url 'trade_delete' trade.pk %}" class="btn-action btn-danger-action">
-                                    <i data-lucide="trash-2" class="w-4 h-4"</i>
-                               </a>
-                           </div>
-                       </td>
-                   </tr>
-                    {% endfor %}
-               </tbody>
-           </table>
-       </div>
-        {% else %}
-        <div class="empty-state">
-            <i data-lucide="inbox" class="w-16 h-16 mx-auto"</i>
-            <p class="mt-3">معامله‌ای ثبت نشده است</p>
-            <a href="{% url 'trade_add' %}" class="btn-primary inline-flex mt-4">
-                <i data-lucide="plus" class="w-4 h-4"</i>
-                <span>ثبت اولین معامله</span>
-           </a>
-       </div>
-        {% endif %}
-   </div>
+<!-- Summary Stats -->
+<div class="row g-3 mb-4 stagger-children">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-card-glow" style="background: var(--accent-blue);"></div>
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">تعداد معاملات</div>
+                    <div class="stat-value">{{ total_count }}</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(59,130,246,0.12); color: var(--accent-blue);">
+                    <i class="bi bi-hash"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-card-glow" style="background: var(--accent-green);"></div>
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">نرخ برد</div>
+                    <div class="stat-value">{{ win_rate }}%</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(16,185,129,0.12); color: var(--accent-green);">
+                    <i class="bi bi-trophy"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-card-glow" style="background: {% if total_pnl >= 0 %}var(--accent-green){% else %}var(--accent-red){% endif %};"></div>
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">سود/زیان کل</div>
+                    <div class="stat-value {% if total_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                        {% if total_pnl >= 0 %}+{% endif %}${{ total_pnl|floatformat:2 }}
+                    </div>
+                </div>
+                <div class="stat-icon" style="background: {% if total_pnl >= 0 %}rgba(16,185,129,0.12){% else %}rgba(239,68,68,0.12){% endif %}; color: {% if total_pnl >= 0 %}var(--accent-green){% else %}var(--accent-red){% endif %};">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trades Table -->
+<div class="table-glass animate-fade-in-delay-2">
+    {% if trades %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>تاریخ</th>
+                <th>نماد</th>
+                <th>جهت</th>
+                <th>قیمت ورود</th>
+                <th>قیمت خروج</th>
+                <th>تعداد</th>
+                <th>سود/زیان</th>
+                <th>درصد</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trade in trades %}
+            <tr>
+                <td>{{ trade.date }}</td>
+                <td><span class="symbol-badge">{{ trade.symbol }}</span></td>
+                <td><span class="badge badge-{{ trade.side }}">{{ trade.get_side_display }}</span></td>
+                <td>{{ trade.entry_price }}</td>
+                <td>{{ trade.exit_price }}</td>
+                <td>{{ trade.quantity }}</td>
+                <td class="{% if trade.pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}" style="font-weight: 700;">
+                    {% if trade.pnl >= 0 %}+{% endif %}${{ trade.pnl|floatformat:2 }}
+                </td>
+                <td class="{% if trade.pnl_percentage >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">
+                    {% if trade.pnl_percentage >= 0 %}+{% endif %}{{ trade.pnl_percentage|floatformat:2 }}%
+                </td>
+                <td>
+                    <div class="d-flex gap-1">
+                        <a href="{% url 'trade_edit' trade.pk %}" class="btn-action" title="ویرایش">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'trade_delete' trade.pk %}" class="btn-action btn-action-danger" title="حذف">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="bi bi-inbox"></i>
+        </div>
+        <h5>
+            {% if filter_form.data %}
+                معامله‌ای با فیلترهای انتخابی یافت نشد
+            {% else %}
+                هنوز معامله‌ای ثبت نشده است
+            {% endif %}
+        </h5>
+        <p>معامله‌ای برای نمایش وجود ندارد</p>
+        <a href="{% url 'trade_add' %}" class="btn btn-primary-glass mt-2">
+            <i class="bi bi-plus-lg me-1"></i>افزودن معامله
+        </a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

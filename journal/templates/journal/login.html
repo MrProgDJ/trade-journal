@@ -2,59 +2,49 @@
 {% block title %}ورود{% endblock %}
 
 {% block content %}
+<!-- Animated Background Orbs -->
 <div class="auth-orbs">
-    <div class="auth-orb"</div>
-    <div class="auth-orb"</div>
-    <div class="auth-orb"</div>
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-orb auth-orb-3"></div>
 </div>
 
-<div class="min-h-screen flex items-center justify-center p-4 relative z-10">
-    <div class="w-full max-w-[420px] glass-card p-10 reveal">
-        <div class="absolute inset-0 rounded-3xl pointer-events-none gradient-border"</div>
-
-        <div class="text-center mb-6">
-            <div class="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-4 bg-gradient-to-br from-blue-500 to-violet-500 text-white shadow-glow-blue">
-                <i data-lucide="trending-up" class="w-8 h-8"</i>
-           </div>
-            <h2 class="text-2xl font-bold mb-1 aurora-text">ورود به دفتر معاملات</h2>
-            <p class="text-ink-muted text-sm">حساب خود را وارد کنید</p>
-       </div>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <div style="width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);">
+                <i class="bi bi-graph-up-arrow" style="font-size: 1.75rem; color: white;"></i>
+            </div>
+            <h2 style="font-weight: 700;">ورود به دفتر معاملات</h2>
+            <p style="color: var(--text-muted);">حساب خود را وارد کنید</p>
+        </div>
 
         {% if form.errors %}
-        <div class="alert-glass alert-danger mb-5">
-            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"</i>
-            <span class="text-sm">نام کاربری یا رمز عبور اشتباه است</span>
-       </div>
+        <div class="alert-glass alert-danger mb-3">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            نام کاربری یا رمز عبور اشتباه است
+        </div>
         {% endif %}
 
-        <form method="post" class="space-y-5">
+        <form method="post">
             {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">نام کاربری</label>
+                <input type="text" name="username" class="form-control" placeholder="نام کاربری" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">رمز عبور</label>
+                <input type="password" name="password" class="form-control" placeholder="رمز عبور" required>
+            </div>
+            <button type="submit" class="btn btn-primary-glass w-100 mb-3" style="padding: 0.75rem; font-size: 1rem;">
+                <i class="bi bi-box-arrow-in-left me-2"></i>ورود
+            </button>
+        </form>
 
-            <div class="relative">
-                <input type="text" name="username" id="id_username"
-                       class="floating-field" placeholder=" " required autofocus>
-                <label for="id_username" class="floating-label text-sm">نام کاربری</label>
-           </div>
-
-            <div class="relative" x-data="{ show: false }">
-                <input :type="show ? 'text' : 'password'" name="password" id="id_password"
-                       class="floating-field pl-12" placeholder=" " required>
-                <label for="id_password" class="floating-label text-sm">رمز عبور</label>
-                <button type="button" @click="show = !show"
-                        class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink-primary transition-colors">
-                    <i :data-lucide="show ? 'eye-off' : 'eye'" class="w-5 h-5"</i>
-               </button>
-           </div>
-
-            <button type="submit" class="btn-primary w-full py-3 text-base">
-                <i data-lucide="log-in" class="w-5 h-5"</i><span>ورود</span>
-           </button>
-       </form>
-
-        <div class="text-center mt-6 text-sm">
-            <span class="text-ink-muted">حساب ندارید؟</span>
-            <a href="{% url 'register' %}" class="text-blue-400 hover:text-blue-300 hover:underline font-bold transition-colors">ثبت‌نام کنید</a>
-       </div>
-   </div>
+        <div class="text-center">
+            <span style="color: var(--text-muted);">حساب ندارید؟</span>
+            <a href="{% url 'register' %}" class="login-link fw-bold">ثبت‌نام کنید</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
