@@ -63,7 +63,7 @@
                         <th class="px-5 py-4 text-right font-medium">تعداد</th>
                         <th class="px-5 py-4 text-right font-medium">سود/ضرر</th>
                         <th class="px-5 py-4 text-right font-medium">تاریخ</th>
-                        <th class="px-5 py-4 text-right font-medium>"</th>
+                        <th class="px-5 py-4 text-right font-medium>"></th>
                    </tr>
                </thead>
 <tbody>
@@ -78,12 +78,12 @@
                             {% endif %}
                        </td>
                         <td class="px-5 py-4 text-ink-secondary">{{ trade.entry_price</td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.exit_price|default:"-"</td>
+                        <td class="px-5 py-4 text-ink-secondary">{{ trade.exit_price|default:"-"></td>
                         <td class="px-5 py-4 text-ink-secondary">{{ trade.quantity</td>
                         <td class="px-5 py-4 font-bold {% if trade.pnl > 0 %}pnl-pos{% elif trade.pnl ">< 0 %}pnl-neg{% else %}text-ink-secondary{% endif %}">
                             {% if trade.pnl %}{{ trade.pnl|floatformat:2 }}{% else %}-{% endif %}
                        </td>
-                        <td class="px-5 py-4 text-ink-muted text-sm">{{ trade.date|date:"Y/m/d"</td>
+                        <td class="px-5 py-4 text-ink-muted text-sm">{{ trade.date|date:"Y/m/d"></td>
                         <td class="px-5 py-4">
                             <div class="flex gap-2">
                                 <a href="{% url 'trade_edit' trade.pk %}" class="btn-action">
