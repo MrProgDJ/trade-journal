@@ -280,14 +280,14 @@
         <nav class="flex-1 px-3 py-4 overflow-y-auto">
             <div class="text-[11px] font-semibold text-ink-muted uppercase tracking-widest px-4 py-2">منوی اصلی</div>
             <a class="sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
-                <i data-lucide="gauge" class="w-5 h-5 shrink-0"></i><span>داشبورد</span
+                <i data-lucide="gauge" class="w-5 h-5 shrink-0"</i><span>داشبورد</span
            </a>
             <a class="sidebar-link {% if request.resolver_match.url_name == 'trade_list' %}active{% endif %}" href="{% url 'trade_list' %}">
-                <i data-lucide="list" class="w-5 h-5 shrink-0"></i><span>معاملات</span
+                <i data-lucide="list" class="w-5 h-5 shrink-0"</i><span>معاملات</span
            </a>
             {% url 'trade_add' as trade_add_url %}
             <a class="sidebar-link {% if request.resolver_match.url_name == 'trade_add' or request.resolver_match.url_name == 'trade_edit' %}active{% endif %}" href="{{ trade_add_url }}">
-                <i data-lucide="plus-circle" class="w-5 h-5 shrink-0"></i><span>افزودن معامله</span
+                <i data-lucide="plus-circle" class="w-5 h-5 shrink-0"</i><span>افزودن معامله</span
            </a>
        </nav>
 
@@ -309,18 +309,18 @@
     {# Bottom nav (mobile) #}
     <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-slate-950/90 backdrop-blur-xl border-t border-slate-700/40 flex justify-around items-stretch py-1.5 px-1">
         <a class="flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-lg text-[10px] font-medium {% if request.resolver_match.url_name == 'dashboard' %}text-blue-400 bg-blue-500/10{% else %}text-ink-muted{% endif %}" href="{% url 'dashboard' %}">
-            <i data-lucide="gauge" class="w-5 h-5"></i><span>داشبورد</span
+            <i data-lucide="gauge" class="w-5 h-5"</i><span>داشبورد</span
        </a>
         <a class="flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-lg text-[10px] font-medium {% if request.resolver_match.url_name == 'trade_list' %}text-blue-400 bg-blue-500/10{% else %}text-ink-muted{% endif %}" href="{% url 'trade_list' %}">
-            <i data-lucide="list" class="w-5 h-5"></i><span>معاملات</span
+            <i data-lucide="list" class="w-5 h-5"</i><span>معاملات</span
        </a>
         {% url 'trade_add' as trade_add_url_mobile %}
         <a class="flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-lg text-[10px] font-medium {% if request.resolver_match.url_name == 'trade_add' or request.resolver_match.url_name == 'trade_edit' %}text-blue-400 bg-blue-500/10{% else %}text-ink-muted{% endif %}" href="{{ trade_add_url_mobile }}">
-            <i data-lucide="plus-circle" class="w-5 h-5"></i><span>افزودن</span
+            <i data-lucide="plus-circle" class="w-5 h-5"</i><span>افزودن</span
        </a>
         {% url 'logout' as logout_url_mobile %}
         <a class="flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-lg text-[10px] font-medium text-ink-muted hover:text-rose-400" href="{{ logout_url_mobile }}">
-            <i data-lucide="log-out" class="w-5 h-5"></i><span>خروج</span
+            <i data-lucide="log-out" class="w-5 h-5"</i><span>خروج</span
        </a>
    </nav>
 </div>

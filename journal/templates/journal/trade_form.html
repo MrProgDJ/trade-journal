@@ -5,10 +5,10 @@
 <div class="max-w-2xl mx-auto reveal">
     <div class="mb-6">
         <a href="{% url 'trade_list' %}" class="inline-flex items-center gap-2 text-ink-muted hover:text-ink-primary text-sm transition-colors mb-3">
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            <span>بازگشت به لیست></span>
+            <i data-lucide="arrow-right" class="w-4 h-4"</i>
+            <span>بازگشت به لیست</span>
         </a>
-        <h1 class="text-2xl font-bold">{{ title }}></h1>
+        <h1 class="text-2xl font-bold">{{ title }}</h1>
     </div>
 
     <div class="glass-card p-8">
@@ -17,12 +17,12 @@
 
             {% if form.errors %}
             <div class="alert-glass alert-danger">
-                <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
+                <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"</i>
                 <div class="text-sm">
                     {% for field, errors in form.errors.items %}
                         <strong>{{ field }}:</strong> {{ errors|join:", " }}
                     {% endfor %}
-                ></div>
+                </div>
             </div>
             {% endif %}
 
@@ -32,23 +32,23 @@
                     <input type="text" name="symbol" id="id_symbol"
                            value="{{ form.symbol.value|default:'' }}"
                            class="floating-field" placeholder=" " required>
-                    <label for="id_symbol" class="floating-label text-sm">نماد (Symbol)></label>
+                    <label for="id_symbol" class="floating-label text-sm">نماد (Symbol)</label>
                 </div>
 
                 {# Side #}
                 <div>
-                    <label class="block text-ink-muted text-sm mb-2 font-medium">نوع معامله></label>
+                    <label class="block text-ink-muted text-sm mb-2 font-medium">نوع معامله</label>
                     <div class="flex gap-3" x-data="{ side: '{{ form.side.value|default:"buy" }}' }">
                         <button type="button" @click="side='buy'; document.getElementById('id_side').value='buy'"
                                 :class="side==='buy' ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400' : 'bg-slate-900/40 border-slate-700/40 text-ink-muted'"
                                 class="flex-1 py-3 rounded-xl border font-semibold transition-all duration-200 text-sm">
-                            <i data-lucide="trending-up" class="w-4 h-4 inline-block ml-1"></i>
+                            <i data-lucide="trending-up" class="w-4 h-4 inline-block ml-1"</i>
                             خرید
                         </button>
                         <button type="button" @click="side='sell'; document.getElementById('id_side').value='sell'"
                                 :class="side==='sell' ? 'bg-rose-500/20 border-rose-500/50 text-rose-400' : 'bg-slate-900/40 border-slate-700/40 text-ink-muted'"
                                 class="flex-1 py-3 rounded-xl border font-semibold transition-all duration-200 text-sm">
-                            <i data-lucide="trending-down" class="w-4 h-4 inline-block ml-1"></i>
+                            <i data-lucide="trending-down" class="w-4 h-4 inline-block ml-1"</i>
                             فروش
                         </button>
                         <input type="hidden" name="side" id="id_side" value="{{ form.side.value|default:"buy" }}">
@@ -60,7 +60,7 @@
                     <input type="number" name="entry_price" id="id_entry_price"
                            value="{{ form.entry_price.value|default:'' }}"
                            class="floating-field" placeholder=" " step="any" required>
-                    <label for="id_entry_price" class="floating-label text-sm">قیمت ورود></label>
+                    <label for="id_entry_price" class="floating-label text-sm">قیمت ورود</label>
                 </div>
 
                 {# Exit Price #}
@@ -68,7 +68,7 @@
                     <input type="number" name="exit_price" id="id_exit_price"
                            value="{{ form.exit_price.value|default:'' }}"
                            class="floating-field" placeholder=" " step="any">
-                    <label for="id_exit_price" class="floating-label text-sm">قیمت خروج (اختیاری)></label>
+                    <label for="id_exit_price" class="floating-label text-sm">قیمت خروج (اختیاری)</label>
                 </div>
 
                 {# Quantity #}
@@ -76,7 +76,7 @@
                     <input type="number" name="quantity" id="id_quantity"
                            value="{{ form.quantity.value|default:'' }}"
                            class="floating-field" placeholder=" " required>
-                    <label for="id_quantity" class="floating-label text-sm">تعداد></label>
+                    <label for="id_quantity" class="floating-label text-sm">تعداد</label>
                 </div>
 
                 {# Date #}
@@ -84,7 +84,7 @@
                     <input type="date" name="date" id="id_date"
                            value="{{ form.date.value|default:'' }}"
                            class="floating-field" placeholder=" " required>
-                    <label for="id_date" class="floating-label text-sm" style="top: .55rem; transform: translateY(0); font-size: .72rem; color: #60a5fa;">تاریخ></label>
+                    <label for="id_date" class="floating-label text-sm" style="top: .55rem; transform: translateY(0); font-size: .72rem; color: #60a5fa;">تاریخ</label>
                 </div>
             </div>
 
@@ -92,16 +92,16 @@
             <div class="relative">
                 <textarea name="notes" id="id_notes" rows="3"
                           class="floating-field" placeholder=" ">{{ form.notes.value|default:'' }}</textarea>
-                <label for="id_notes" class="floating-label text-sm">یادداشت (اختیاری)></label>
+                <label for="id_notes" class="floating-label text-sm">یادداشت (اختیاری)</label>
             </div>
 
             {# Submit #}
             <div class="flex gap-3 pt-2">
                 <button type="submit" class="btn-primary flex-1 py-3">
-                    <i data-lucide="save" class="w-5 h-5"></i>
-                    <span>{% if trade %}ذخیره تغییرات{% else %}ثبت معامله{% endif %}></span>
+                    <i data-lucide="save" class="w-5 h-5"</i>
+                    <span>{% if trade %}ذخیره تغییرات{% else %}ثبت معامله{% endif %}</span>
                 </button>
-                <a href="{% url 'trade_list' %}" class="btn-glass py-3 px-6">لغو></a>
+                <a href="{% url 'trade_list' %}" class="btn-glass py-3 px-6">لغو</a>
             </div>
         </form>
     </div>

@@ -5,38 +5,38 @@
 <div class="max-w-lg mx-auto reveal">
     <div class="glass-card p-8 text-center">
         <div class="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-5 bg-rose-500/10 border border-rose-500/30">
-            <i data-lucide="alert-triangle" class="w-8 h-8 text-rose-400"></i>
+            <i data-lucide="alert-triangle" class="w-8 h-8 text-rose-400"</i>
         </div>
 
-        <h2 class="text-xl font-bold mb-2">حذف معامله></h2>
+        <h2 class="text-xl font-bold mb-2">حذف معامله</h2>
         <p class="text-ink-secondary text-sm mb-6">
             آیا مطمئن هستید که می‌خواهید معامله
-            <span class="pill-symbol font-bold">{{ trade.symbol }}></span>
+            <span class="pill-symbol font-bold">{{ trade.symbol }}</span>
             را حذف کنید؟
-        ></p>
+        </p>
 
         <div class="glass-card p-4 mb-6 text-right">
             <div class="grid grid-cols-2 gap-3 text-sm">
-                <div class="text-ink-muted">نماد:></div>
-                <div class="font-semibold">{{ trade.symbol }}></div>
-                <div class="text-ink-muted">نوع:></div>
+                <div class="text-ink-muted">نماد:</div>
+                <div class="font-semibold">{{ trade.symbol }}</div>
+                <div class="text-ink-muted">نوع:</div>
                 <div>
                     {% if trade.side == 'buy' %}
-                        <span class="pill-buy">خرید></span>
+                        <span class="pill-buy">خرید</span>
                     {% else %}
-                        <span class="pill-sell">فروش></span>
+                        <span class="pill-sell">فروش</span>
                     {% endif %}
-                ></div>
-                <div class="text-ink-muted">ورود:></div>
-                <div>{{ trade.entry_price }}></div>
-                <div class="text-ink-muted">خروج:></div>
-                <div>{{ trade.exit_price|default:"-" }}></div>
-                <div class="text-ink-muted">تعداد:></div>
-                <div>{{ trade.quantity }}></div>
-                <div class="text-ink-muted">سود/ضرر:></div>
+                </div>
+                <div class="text-ink-muted">ورود:</div>
+                <div>{{ trade.entry_price }}</div>
+                <div class="text-ink-muted">خروج:</div>
+                <div>{{ trade.exit_price|default:"-" }}</div>
+                <div class="text-ink-muted">تعداد:</div>
+                <div>{{ trade.quantity }}</div>
+                <div class="text-ink-muted">سود/ضرر:</div>
                 <div class="{% if trade.pnl > 0 %}pnl-pos{% elif trade.pnl ">< 0 %}pnl-neg{% endif %} font-bold">
                     {% if trade.pnl %}{{ trade.pnl|floatformat:2 }}{% else %}-{% endif %}
-                ></div>
+                </div>
             </div>
         </div>
 
@@ -44,11 +44,11 @@
             <form method="post" class="flex-1">
                 {% csrf_token %}
                 <button type="submit" class="btn-danger w-full py-3">
-                    <i data-lucide="trash-2" class="w-5 h-5"></i>
-                    <span>بله، حذف شود></span>
+                    <i data-lucide="trash-2" class="w-5 h-5"</i>
+                    <span>بله، حذف شود</span>
                 </button>
             </form>
-            <a href="{% url 'trade_list' %}" class="btn-glass py-3 px-6 flex-1">لغو></a>
+            <a href="{% url 'trade_list' %}" class="btn-glass py-3 px-6 flex-1">لغو</a>
         </div>
     </div>
 </div>

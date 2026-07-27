@@ -3,18 +3,18 @@
 
 {% block content %}
 <div class="auth-orbs">
-    <div class="auth-orb"></div>
-    <div class="auth-orb"></div>
-    <div class="auth-orb"></div>
+    <div class="auth-orb"</div>
+    <div class="auth-orb"</div>
+    <div class="auth-orb"</div>
 </div>
 
 <div class="min-h-screen flex items-center justify-center p-4 relative z-10">
     <div class="w-full max-w-[420px] glass-card p-10 reveal">
-        <div class="absolute inset-0 rounded-3xl pointer-events-none gradient-border"></div>
+        <div class="absolute inset-0 rounded-3xl pointer-events-none gradient-border"</div>
 
         <div class="text-center mb-6">
             <div class="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-4 bg-gradient-to-br from-blue-500 to-violet-500 text-white shadow-glow-blue">
-                <i data-lucide="trending-up" class="w-8 h-8"></i>
+                <i data-lucide="trending-up" class="w-8 h-8"</i>
            </div>
             <h2 class="text-2xl font-bold mb-1 aurora-text">ورود به دفتر معاملات</h2>
             <p class="text-ink-muted text-sm">حساب خود را وارد کنید</p>
@@ -22,7 +22,7 @@
 
         {% if form.errors %}
         <div class="alert-glass alert-danger mb-5">
-            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"</i>
             <span class="text-sm">نام کاربری یا رمز عبور اشتباه است</span>
        </div>
         {% endif %}
@@ -42,12 +42,12 @@
                 <label for="id_password" class="floating-label text-sm">رمز عبور</label>
                 <button type="button" @click="show = !show"
                         class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink-primary transition-colors">
-                    <i :data-lucide="show ? 'eye-off' : 'eye'" class="w-5 h-5"></i>
+                    <i :data-lucide="show ? 'eye-off' : 'eye'" class="w-5 h-5"</i>
                </button>
            </div>
 
             <button type="submit" class="btn-primary w-full py-3 text-base">
-                <i data-lucide="log-in" class="w-5 h-5"></i><span>ورود</span>
+                <i data-lucide="log-in" class="w-5 h-5"</i><span>ورود</span>
            </button>
        </form>
 
