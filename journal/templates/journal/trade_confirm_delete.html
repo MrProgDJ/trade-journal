@@ -34,7 +34,7 @@
                 <div class="text-ink-muted">تعداد:></div>
                 <div>{{ trade.quantity }}></div>
                 <div class="text-ink-muted">سود/ضرر:></div>
-                <div class="{% if trade.pnl > 0 %}pnl-pos{% elif trade.pnl < 0 %}pnl-neg{% endif %} font-bold">
+                <div class="{% if trade.pnl > 0 %}pnl-pos{% elif trade.pnl ">< 0 %}pnl-neg{% endif %} font-bold">
                     {% if trade.pnl %}{{ trade.pnl|floatformat:2 }}{% else %}-{% endif %}
                 ></div>
             </div>

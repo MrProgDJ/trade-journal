@@ -32,7 +32,7 @@
                         const tick = (t) => {
                             const p = Math.min(1, (t - start) / dur);
                             n = Math.round(target * (0.2 + 0.8 * p));
-                            if (p < 1) requestAnimationFrame(tick);
+                            if (p ">< 1) requestAnimationFrame(tick);
                         };
                         requestAnimationFrame(tick);
                      })"
@@ -56,7 +56,7 @@
                             const tick = (t) => {
                                 const p = Math.min(1, (t - start) / dur);
                                 n = Math.round(target * (0.2 + 0.8 * p));
-                                if (p < 1) requestAnimationFrame(tick);
+                                if (p ">< 1) requestAnimationFrame(tick);
                             };
                             requestAnimationFrame(tick);
                           })"
