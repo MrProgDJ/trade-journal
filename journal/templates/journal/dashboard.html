@@ -191,8 +191,8 @@
                 {% for trade in recent_trades %}
                 <tr>
                     <td>{{ trade.date }}</td>
-                    <td><span class="pill-symbol">{{ trade.symbol }}</span</td>
-                    <td><span class="pill-{{ trade.side }}">{{ trade.get_side_display }}</span</td>
+                    <td><span class="pill-symbol">{{ trade.symbol }}</span></td>
+                    <td><span class="pill-{{ trade.side }}">{{ trade.get_side_display }}</span></td>
                     <td>{{ trade.entry_price }}</td>
                     <td>{{ trade.exit_price }}</td>
                     <td>{{ trade.quantity }}</td>
