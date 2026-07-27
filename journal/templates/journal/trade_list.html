@@ -6,13 +6,13 @@
     {# Page header #}
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-bold">معاملات<</h1>
-            <p class="text-ink-muted text-sm mt-1">لیست تمام معاملات شما<</p>
-       <</div>
+            <h1 class="text-2xl font-bold">معاملات<></h1>
+            <p class="text-ink-muted text-sm mt-1">لیست تمام معاملات شما<></p>
+       <></div>
         <a href="{% url 'trade_add' %}" class="btn-primary">
-            <i data-lucide="plus" class="w-4 h-4"><</i>
-            <span>معامله جدید<</span>
-       <</a>
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>معامله جدید<></span>
+       <></a>
    <</div>
 
     {# Filters #}
@@ -21,31 +21,31 @@
             <div class="relative">
                 <input type="text" name="symbol" value="{{ filter_symbol|default:'' }}"
                        class="floating-field" placeholder=" " id="filter_symbol">
-                <label for="filter_symbol" class="floating-label text-sm">نماد<</label>
-           <</div>
+                <label for="filter_symbol" class="floating-label text-sm">نماد<></label>
+           <></div>
             <div>
                 <select name="side" class="floating-field-select">
-                    <option value="">همه<</option>
-                    <option value="buy" {% if filter_side == 'buy' %}selected{% endif %}>خرید<</option>
-                    <option value="sell" {% if filter_side == 'sell' %}selected{% endif %}>فروش<</option>
-               <</select>
-           <</div>
+                    <option value="">همه<></option>
+                    <option value="buy" {% if filter_side == 'buy' %}selected{% endif %}>خرید<></option>
+                    <option value="sell" {% if filter_side == 'sell' %}selected{% endif %}>فروش<></option>
+               <></select>
+           <></div>
             <div>
                 <select name="result" class="floating-field-select">
-                    <option value="">همه<</option>
-                    <option value="win" {% if filter_result == 'win' %}selected{% endif %}>سود<</option>
-                    <option value="loss" {% if filter_result == 'loss' %}selected{% endif %}>ضرر<</option>
-               <</select>
-           <</div>
+                    <option value="">همه<></option>
+                    <option value="win" {% if filter_result == 'win' %}selected{% endif %}>سود<></option>
+                    <option value="loss" {% if filter_result == 'loss' %}selected{% endif %}>ضرر<></option>
+               <></select>
+           <></div>
             <div class="flex gap-2">
                 <button type="submit" class="btn-primary flex-1">
-                    <i data-lucide="filter" class="w-4 h-4"><</i>
-                    <span>فیلتر<</span>
-               <</button>
+                    <i data-lucide="filter" class="w-4 h-4"></i>
+                    <span>فیلتر<></span>
+               <></button>
                 <a href="{% url 'trade_list' %}" class="btn-glass">
-                    <i data-lucide="x" class="w-4 h-4"><</i>
-               <</a>
-           <</div>
+                    <i data-lucide="x" class="w-4 h-4"></i>
+               <></a>
+           <></div>
        <</form>
    <</div>
 
@@ -56,43 +56,43 @@
             <table class="w-full">
                 <thead>
                     <tr class="text-ink-muted text-xs">
-                        <th class="px-5 py-4 text-right font-medium">نماد<</th>
-                        <th class="px-5 py-4 text-right font-medium">نوع<</th>
-                        <th class="px-5 py-4 text-right font-medium">ورود<</th>
-                        <th class="px-5 py-4 text-right font-medium">خروج<</th>
-                        <th class="px-5 py-4 text-right font-medium">تعداد<</th>
-                        <th class="px-5 py-4 text-right font-medium">سود/ضرر<</th>
-                        <th class="px-5 py-4 text-right font-medium">تاریخ<</th>
-                        <th class="px-5 py-4 text-right font-medium><</th>
+                        <th class="px-5 py-4 text-right font-medium">نماد<></th>
+                        <th class="px-5 py-4 text-right font-medium">نوع<></th>
+                        <th class="px-5 py-4 text-right font-medium">ورود<></th>
+                        <th class="px-5 py-4 text-right font-medium">خروج<></th>
+                        <th class="px-5 py-4 text-right font-medium">تعداد<></th>
+                        <th class="px-5 py-4 text-right font-medium">سود/ضرر<></th>
+                        <th class="px-5 py-4 text-right font-medium">تاریخ<></th>
+                        <th class="px-5 py-4 text-right font-medium></th>
                    <</tr>
                <</thead>
                 <tbody>
                     {% for trade in trades %}
                     <tr class="border-t border-line hover:bg-white/[0.02] transition-colors">
-                        <td class="px-5 py-4"><span class="pill-symbol">{{ trade.symbol</span<</td>
+                        <td class="px-5 py-4"><span class="pill-symbol">{{ trade.symbol</span<></td>
                         <td class="px-5 py-4">
                             {% if trade.side == 'buy' %}
-                                <span class="pill-buy">خرید<</span>
+                                <span class="pill-buy">خرید<></span>
                             {% else %}
-                                <span class="pill-sell">فروش<</span>
+                                <span class="pill-sell">فروش<></span>
                             {% endif %}
-                       <</td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.entry_price<</td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.exit_price|default:"-"<</td>
-                        <td class="px-5 py-4 text-ink-secondary">{{ trade.quantity<</td>
+                       <></td>
+                        <td class="px-5 py-4 text-ink-secondary">{{ trade.entry_price<></td>
+                        <td class="px-5 py-4 text-ink-secondary">{{ trade.exit_price|default:"-"<></td>
+                        <td class="px-5 py-4 text-ink-secondary">{{ trade.quantity<></td>
                         <td class="px-5 py-4 font-bold {% if trade.pnl > 0 %}pnl-pos{% elif trade.pnl < 0 %}pnl-neg{% else %}text-ink-secondary{% endif %}">
                             {% if trade.pnl %}{{ trade.pnl|floatformat:2 }}{% else %}-{% endif %}
-                       <</td>
-                        <td class="px-5 py-4 text-ink-muted text-sm">{{ trade.date|date:"Y/m/d"<</td>
+                       <></td>
+                        <td class="px-5 py-4 text-ink-muted text-sm">{{ trade.date|date:"Y/m/d"<></td>
                         <td class="px-5 py-4">
                             <div class="flex gap-2">
                                 <a href="{% url 'trade_edit' trade.pk %}" class="btn-action">
-                                    <i data-lucide="edit-2" class="w-4 h-4"><</i>
-                               <</a>
+                                    <i data-lucide="edit-2" class="w-4 h-4"></i>
+                               <></a>
                                 <a href="{% url 'trade_delete' trade.pk %}" class="btn-action btn-danger-action">
-                                    <i data-lucide="trash-2" class="w-4 h-4"><</i>
-                               <</a>
-                           <</div>
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                               <></a>
+                           <></div>
                        <</td>
                    <</tr>
                     {% endfor %}
@@ -101,13 +101,13 @@
        <</div>
         {% else %}
         <div class="empty-state">
-            <i data-lucide="inbox" class="w-16 h-16 mx-auto"><</i>
-            <p class="mt-3">معامله‌ای ثبت نشده است<</p>
+            <i data-lucide="inbox" class="w-16 h-16 mx-auto"></i>
+            <p class="mt-3">معامله‌ای ثبت نشده است<></p>
             <a href="{% url 'trade_add' %}" class="btn-primary inline-flex mt-4">
-                <i data-lucide="plus" class="w-4 h-4"><</i>
-                <span>ثبت اولین معامله<</span>
-           <</a>
-       <</div>
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>ثبت اولین معامله<></span>
+           <></a>
+       <></div>
         {% endif %}
    <</div>
 <</div>
